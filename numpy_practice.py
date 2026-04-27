@@ -165,4 +165,42 @@ A = np.array([
 # print(x)
 # print(idx)
 
-# 
+# concatenate 合併
+# a = np.array([1, 2, 3])
+# b = np.array([4, 5, 6])
+
+# # c = np.concatenate([a,b])
+# # c = np.vstack([a,b])
+# c = np.hstack([a,b])
+
+# print(c)
+
+# x = np.array([1.0, 2.0, np.nan, 4.0])
+# print(np.isnan(x))
+
+N = 3
+dt = 0.001
+steps = 100000
+
+Q = np.array([
+    [-1.0,  0.2,  0.0],
+    [ 0.1, -1.5,  0.3],
+    [ 0.0,  0.2, -1.2]
+])
+
+sigma = np.array([0.1, 0.1, 0.1])
+
+rng = np.random.default_rng(1)
+
+x = np.zeros(N)
+trajectory = np.zeros((steps, N))
+
+for t in range(steps):
+    noise = np.sqrt(sigma * dt) * rng.normal(size=N)
+    x = x + dt * (Q @ x) + noise
+    trajectory[t] = x
+
+mean_x = np.mean(trajectory, axis=0)
+K = np.cov(trajectory.T)
+print(mean_x)
+print(K)
