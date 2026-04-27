@@ -61,10 +61,30 @@ import numpy as np
 # np.savetxt("data/out.csv", arr, fmt="%.6f", delimiter=",", header="x y z", comments="")
 # np.savetxt("data/out.txt", arr, fmt="%.4f", footer="end", comments="# ")
 
-arr = np.array([
-    [1, 2],
-    [3, 4],
-    [5, 6]
-])
+# arr = np.array([1, 2, 3, 4]) # 一欄
+# arr = np.array([1, 2, 3, 4]).reshape(1,-1) # 一列
+# np.savetxt("data/out.txt", arr, fmt="%d")
 
-np.savetxt("data/out.txt", arr, fmt="%d")
+# arr = np.loadtxt("data/points.txt")
+# print(arr.shape)
+
+# x, y = arr[:, 0], arr[:, 1]
+
+# print(x)
+# print(y)
+
+arr = np.loadtxt("data/grid.txt")
+
+i = arr[:, 0].astype(int)
+j = arr[:, 1].astype(int)
+val = arr[:, 2]
+
+nrow = i.max() # no. of rows
+ncol = j.max() # no. of columns
+
+M = np.zeros((nrow, ncol))
+
+for ii, jj, vv in zip(i, j, val):
+    M[ii - 1, jj - 1] = vv
+
+print(M)
